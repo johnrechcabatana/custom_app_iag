@@ -102,13 +102,20 @@ app_license = "MIT"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-#	"*": {
-#		"on_update": "method",
-#		"on_cancel": "method",
-#		"on_trash": "method"
-#	}
-# }
+doc_events = {
+	"Purchase Order": {
+		"validate": "custom_app_iag.public.script.purchase_order.insert_po_project",
+        "on_trash": "custom_app_iag.public.script.purchase_order.po_project_link_delete",
+	},
+    "Purchase Receipt": {
+		"validate": "custom_app_iag.public.script.purchase_receipt.insert_pr_project",
+        "on_trash": "custom_app_iag.public.script.purchase_receipt.pr_project_link_delete",
+	},
+    "Purchase Invoice": {
+		"validate": "custom_app_iag.public.script.purchase_invoice.insert_pi_project",
+        "on_trash": "custom_app_iag.public.script.purchase_invoice.pi_project_link_delete",
+	}
+}
 
 # Scheduled Tasks
 # ---------------
@@ -146,9 +153,9 @@ app_license = "MIT"
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
 # along with any modifications made in other Frappe apps
-# override_doctype_dashboards = {
-#	"Task": "custom_app_iag.task.get_dashboard_data"
-# }
+override_doctype_dashboards = {
+	"Project": "custom_app_iag.public.script.project_dashboard.get_data"
+}
 
 # exempt linked doctypes from being automatically cancelled
 #
